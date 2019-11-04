@@ -4,18 +4,13 @@ import ContactContext from '../../context/contact/contactContext';
 
 const ContactItem = ({ contact }) => {
   const contactContext = useContext(ContactContext);
-  const { id, name, email, phone, type } = contact;
-
   const { deleteContact, setCurrent, clearCurrent } = contactContext;
 
-  const onDelete = () => {
-    console.log('I have been clicked');
-    deleteContact(id);
-    clearCurrent();
-  };
+  const { _id, name, email, phone, type } = contact;
 
-  const setCurrentContact = () => {
-    setCurrent(contact);
+  const onDelete = () => {
+    deleteContact(_id);
+    clearCurrent();
   };
 
   return (
@@ -35,19 +30,20 @@ const ContactItem = ({ contact }) => {
       <ul className="list">
         {email && (
           <li>
-            <i className="fas fa-envelope-open"></i>
-            {email}
+            <i className="fas fa-envelope-open" /> {email}
           </li>
         )}
         {phone && (
           <li>
-            <i className="fas fa-phone"></i>
-            {phone}
+            <i className="fas fa-phone" /> {phone}
           </li>
         )}
       </ul>
       <p>
-        <button className="btn btn-dark btn-sm" onClick={setCurrentContact}>
+        <button
+          className="btn btn-dark btn-sm"
+          onClick={() => setCurrent(contact)}
+        >
           Edit
         </button>
         <button className="btn btn-danger btn-sm" onClick={onDelete}>
@@ -58,7 +54,7 @@ const ContactItem = ({ contact }) => {
   );
 };
 
-ContactItem.protoTypes = {
+ContactItem.propTypes = {
   contact: PropTypes.object.isRequired
 };
 
